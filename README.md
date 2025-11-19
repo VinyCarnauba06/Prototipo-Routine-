@@ -1,46 +1,50 @@
-# Routine+ — MVP com Alertas Climáticos
 
-Este repositório contém um MVP do Routine+, uma aplicação frontend simples que demonstra:
+---
 
-- CRUD de tarefas (criar, listar, concluir, excluir)
-- Organização por categorias (incluindo 'Ao ar livre')
-- Armazenamento local (LocalStorage) para funcionamento offline
-- Integração com OpenWeatherMap para previsão do tempo e alertas climáticos
+## Configuração do projeto (informações do projeto)
 
-## Estrutura de pastas
-```
-routine-plus/
-├─ index.html
-├─ style.css
-├─ script.js
-└─ README.md
-```
+- **API de clima**: o projeto consome a OpenWeatherMap para obter condição e temperatura atual.  
+  - A chave da API deve ser inserida na variável `API_KEY` em `script.js`.
+  - O MVP utiliza requisições diretas ao endpoint público (frontend). Em produção, recomenda-se encaminhar requisições através de um backend para proteger a chave e reduzir custo/exposição.
 
-## Como usar localmente (passo a passo rápido)
+- **Persistência**: tarefas são salvas em `localStorage` sob a chave `tasks_v1`. Esse comportamento permite uso offline e recuperação dos dados no mesmo navegador/dispositivo.
 
-1. Clone o repositório ou baixe os arquivos.
-2. Abra a pasta no VS Code.
-3. (Opcional) Instale a extensão **Live Server** no VS Code para visualizar em `http://127.0.0.1:5500`.
-4. Coloque sua API Key do OpenWeatherMap em `script.js` na variável `API_KEY`.
-5. Abra `index.html` no navegador (ou use Live Server).
-6. Crie tarefas, teste o comportamento e verifique os alertas para tarefas 'Ao ar livre'.
+- **Alerta climático**: a verificação de alerta para tarefas com categoria **Ao ar livre** é feita com base na condição meteorológica atual retornada pela API. A lógica vigente é propositalmente simples no MVP (detecção de chuva/tempestade). Pode ser estendida para previsões por horário, thresholds de vento/temperatura, etc.
 
-## Publicar no GitHub Pages
+---
 
-1. Crie um repositório novo no GitHub (por exemplo: `routine-plus`).
-2. No terminal, dentro da pasta do projeto:
-```bash
-git init
-git add .
-git commit -m "Initial commit - Routine+ MVP"
-git branch -M main
-git remote add origin https://github.com/SEU_USUARIO/SEU_REPO.git
-git push -u origin main
-```
-3. No GitHub, vá em *Settings → Pages* e selecione branch `main` e folder `root` (ou `gh-pages` se usar action).
-4. Aguarde e acesse `https://SEU_USUARIO.github.io/SEU_REPO/`
+## Limitações e pontos para evolução
 
-## Observações técnicas
-- A chave da API do OpenWeatherMap é necessária para carregar o clima.
-- A versão atual é frontend apenas; backend real (sincronização, autenticação) pode ser adicionada mais tarde.
-- Notificações e lógica de alerta são simplificadas para este MVP.
+1. **Segurança da API Key**: atualmente a chave fica no frontend — mover para backend é recomendado.  
+2. **Notificações reais**: alertas são exibidos via `alert()` e logs; ideal evoluir para notificações push (FCM) ou sistema de notificações in-app.  
+3. **Sincronização multi-dispositivo**: a solução atual usa `localStorage`. Para multi-dispositivo, integrar um backend (ex.: Node.js + MongoDB) e autenticação (Firebase/Auth).  
+4. **Cobertura meteorológica**: o MVP utiliza condição atual por cidade; futuramente adicionar previsões por horário, geolocalização e tolerâncias configuráveis pelo usuário.  
+5. **Testes e qualidade**: incluir testes unitários e E2E, além de linter/formatter no pipeline CI.
+
+---
+
+## Boas práticas recomendadas para produção
+
+- Proteja a chave da API movendo chamadas para um backend.
+- Implemente autenticação e armazenamento remoto (usuários e tarefas).
+- Adicione testes automatizados e integração contínua (CI).
+- Utilize uma estratégia de deploy estável (ex.: GitHub Pages para frontend estático; backend separado).
+
+---
+
+## Contribuição
+
+Contribuições são bem-vindas. Para melhorias no MVP, sugerimos dividir as tarefas em issues (ex.: “mover OpenWeatherMap para backend”, “adicionar notificações push”, “integração com Firebase Auth”).
+
+---
+
+## Licença
+
+Este repositório pode incluir uma licença permissiva (por exemplo, MIT). Adicione `LICENSE` conforme sua preferência para uso público no GitHub.
+
+---
+
+### Contato
+
+Projeto desenvolvido por **Vinícius Carnaúba** (Back-end, QA) e **Marcelo Tenório** (Front-end, UX/UI).
+
