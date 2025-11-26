@@ -22,6 +22,15 @@ body {
     line-height: 1.6;
 }
 
+body.no-scroll {
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
 header {
     text-align: center;
     padding: 25px;
@@ -177,12 +186,10 @@ h2 {
 footer { text-align:center; padding: 18px 0; color: var(--text); opacity: 0.7; margin-top: 30px;}
 
 .hidden { 
-    /* Esta classe agora define o estado ESCONDIDO */
     transform: translateX(100%); 
 }
 .kicker { font-size: .9rem; color: #6c757d; }
 
-/* ESTILOS DO POP-UP LATERAL (Corrigido) */
 #weather-popup {
     position: fixed;
     top: 0;
@@ -195,12 +202,10 @@ footer { text-align:center; padding: 18px 0; color: var(--text); opacity: 0.7; m
     z-index: 1000;
     overflow-y: auto;
     transition: transform 0.3s ease-in-out;
-    /* BASE STATE: VISÍVEL. O JS adiciona '.hidden' para escondê-lo. */
     transform: translateX(0%); 
 }
 
 #weather-popup.hidden {
-    /* CORREÇÃO: O estado '.hidden' deve mover o painel para FORA da tela */
     transform: translateX(100%); 
 }
 
@@ -229,38 +234,12 @@ footer { text-align:center; padding: 18px 0; color: var(--text); opacity: 0.7; m
 }
 
 
-/* style.css (Substituir o bloco @media (max-width: 900px)) */
-@media (max-width: 900px) {
-  .main-container {
-    flex-direction: column;
-    padding: 0 10px;
-    gap: 20px;
-  }
-
-  #sidebar {
-    width: 100%;
-    margin-bottom: 10px;
-    position: static; 
-  }
-  
-  #weather-popup {
-    width: 100%;
-    max-width: 100%;
-    height: 80vh; 
-    bottom: 0;
-    top: auto;
-    /* ✅ POSIÇÃO BASE (VISÍVEL) */
-    transform: translateY(0); 
-    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.2); /* Sombra única e limpa */
-  }
-  
-  #weather-popup.hidden {
-      /* ✅ POSIÇÃO ESCONDIDA */
-      transform: translateY(100%); 
-  }
+@media (max-width:600px){
+  header h1{ font-size: 1.6rem; }
+  section{ width: 96%; padding: 16px; }
+  #weather-controls{ flex-direction: column; }
+  #weather-controls button { width: 100%; }
 }
-
-
 
 body.dark {
   --bg: #1e1e1e;
@@ -274,7 +253,6 @@ body.dark {
   --shadow-hover: rgba(255, 255, 255, 0.1);
 }
 
-/* LAYOUT PRINCIPAL E SIDEBAR */
 .main-container {
     display: flex;
     max-width: 1200px;
@@ -369,11 +347,11 @@ body.dark {
     height: 80vh; 
     bottom: 0;
     top: auto;
-    transform: translateY(100%); 
+    transform: translateY(0%); 
     box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.2); 
   }
   
   #weather-popup.hidden {
-      transform: translateY(0); 
+      transform: translateY(100%); 
   }
 }

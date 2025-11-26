@@ -16,15 +16,16 @@ if (themeToggleBtn) {
 applyTheme();
 
 
-// === NOVO BLOCO: LÓGICA DO POP-UP DO CLIMA ===
 const weatherPopup = document.getElementById('weather-popup');
 const toggleWeatherBtn = document.getElementById('toggle-weather-btn');
 const closeWeatherBtn = document.getElementById('close-weather-btn');
 
 if (toggleWeatherBtn) {
     toggleWeatherBtn.addEventListener('click', () => {
-        // Alterna a classe 'hidden' para mostrar/esconder
+        
         weatherPopup.classList.toggle('hidden'); 
+        // ✅ CORREÇÃO AQUI: Adiciona/Remove a classe no-scroll
+        document.body.classList.toggle('no-scroll');
         
         // Carrega o clima apenas se o painel estiver VISÍVEL
         if (!weatherPopup.classList.contains('hidden')) {
@@ -37,6 +38,8 @@ if (closeWeatherBtn) {
     closeWeatherBtn.addEventListener('click', () => {
         // Esconde o painel
         weatherPopup.classList.add('hidden'); 
+        // ✅ CORREÇÃO AQUI: Remove a classe no-scroll ao fechar
+        document.body.classList.remove('no-scroll');
     });
 }
 
@@ -44,7 +47,6 @@ if (closeWeatherBtn) {
 if (weatherPopup) {
     weatherPopup.classList.add('hidden');
 }
-// === FIM NOVO BLOCO ===
 
 
 // script.js - Routine+ frontend
@@ -243,8 +245,7 @@ async function checkWeatherAlert(task) {
     }
 }
 
-function escapeHtml(str){ return String(str).replace(/[&<>"']/g, function(s){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]); }); }
+function escapeHtml(str){ return String(str).replace(/[&<>"']/g, function(s){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&#39;',"'":'&#39;'}[s]); }); }
 
 // inicializa UI
 fetchAndRenderTasks();
-// ❌ loadWeather() foi removido daqui e será chamado ao abrir o pop-up.
